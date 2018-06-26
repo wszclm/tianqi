@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+</body>
+</html>
+<script>
+/*
+  get与post的区别：
+  get是从服务器获取数据,post是向服务器传送数据
+
+  get是把参数数据队列加到提交表单的ACTION属性所指的URL中，值和表单内各个字段一一对应，在URL中可以看到。post是通过HTTPpost机制，将表单内各个字段与其内容放置在HTML HEADER内一起传送到ACTION属性所指的URL地址。用户看不到这个过程。
+
+ */
+$.ajax({
+    url:'/comm/test1.php',  //数据提交的路径
+    type:'POST', //GET  数据提交方式
+    async:true,    //或false,是否异步,是否支持异步刷新
+    data:{         
+        name:'yang',age:25
+    },                //需要提交的数据
+    timeout:5000,    //超时时间
+                        //服务器返回数据的类型
+    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+    beforeSend:function(xhr){
+        console.log(xhr)
+        console.log('发送前')
+    },
+    success:function(data,textStatus,jqXHR){   //请求成功后执行的函数
+        console.log(data)
+        console.log(textStatus)
+        console.log(jqXHR)
+    },
+    error:function(xhr,textStatus){
+        console.log('错误')
+        console.log(xhr)
+        console.log(textStatus)
+    },
+    complete:function(){
+        console.log('结束')
+    }
+})
+
+//原生的ajax方法：
+
+
+$('#send').click(function(){
+    //请求的5个阶段，对应readyState的值
+        //0: 未初始化，send方法未调用；
+        //1: 正在发送请求，send方法已调用；
+        //2: 请求发送完毕，send方法执行完毕；
+        //3: 正在解析响应内容；
+        //4: 响应内容解析完毕；
+
+    var data = 'name=yang';
+    var xhr = new XMLHttpRequest();        //创建一个ajax对象
+    xhr.onreadystatechange = function(event){    //对ajax对象进行监听
+        if(xhr.readyState == 4){    //4表示解析完毕
+            if(xhr.status == 200){    //200为正常返回
+                console.log(xhr)
+            }
+        }
+    };
+    xhr.open('GET','url',true);    //建立连接，参数一：发送方式，二：请求地址，三：是否异步，true为异步
+    xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');    //可有可无
+    xhr.send(data);        //发送
+});
+
+</script>
