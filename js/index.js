@@ -5,7 +5,7 @@ $(function () {
     let cond;
     let hours;
     $.ajax({
-        url:`https://www.toutiao.com/stream/widget/local_weather/data/?city=广州`,
+        url:`https://www.toutiao.com/stream/widget/local_weather/data/?city=苏州`,
         dataType:`jsonp`,
         success:function(obj){   //请求成功后执行的函数
             weather=obj.data.weather;
